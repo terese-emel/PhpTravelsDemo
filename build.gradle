@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+group 'PhpTravels'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/org.testng/testng
+    testCompile group: 'org.testng', name: 'testng', version: '5.7'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    testcompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
+    testcompile group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '2.23.0'
+}
+
+sourceSets {
+    test {
+        java { srcDir 'src/main/tests' }
+    }
+}
+
+test {
+    useTestNG() {
+        suiteXmlFiles << new File("src/test/resources/testng.xml")
+    }
+}
