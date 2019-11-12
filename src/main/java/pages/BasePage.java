@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,12 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BasePage {
-    String baseURL = "https://www.phptravels.net/";
     protected WebDriver driver;
-    private WebDriverWait wait;
+    String baseURL = "https://www.nordicchoicehotels.se/";
     InputStream inputStream;
     /* This is how to declare HashMap */
-    HashMap<String, String> userInfo = new HashMap<String, String>();
+    HashMap<String, String> userInfo = new HashMap<>();
+    private WebDriverWait wait;
 
     //Constructor
     public BasePage(WebDriver driver) {
@@ -32,9 +33,13 @@ public class BasePage {
         WebElement dropdown = driver.findElement(elementBy);
         dropdown.click(); // assuming you have to click the "dropdown" to open it
         List<WebElement> options = dropdown.findElements(By.tagName("li"));
-        for (WebElement option : options)
-        {
+        //System.out.println(options);
+        for (WebElement option : options) {
             System.out.println(option.getText());
+            if (option.getText().contains(textToSelect)) {
+                option.click();
+                break;
+            }
 
         }
 
@@ -54,10 +59,33 @@ public class BasePage {
     //Write Text
     protected void writeText(By elementBy, String text) {
         waitVisibility(elementBy);
-        driver.findElement(elementBy).clear();
+        //driver.findElement(elementBy).clear();
         //System.out.println(text);
         driver.findElement(elementBy).sendKeys(text);
     }
+
+    //select date
+    protected void datePicker(By elementBy, String text) {
+        WebElement dateWidget = driver.findElement(elementBy);
+        List<WebElement> columns = dateWidget.findElements(By.tagName("td"));
+
+        for (WebElement cell : columns) {
+            //Select Date
+            if (cell.getText().equals(text)) {
+                cell.findElement(By.linkText(text)).click();
+                break;
+            }
+        }
+    }
+
+    //Send Keystroke
+    protected void sendKeystroke(By elementBy, Keys key) {
+        waitVisibility(elementBy);
+        //driver.findElement(elementBy).clear();
+        //System.out.println(text);
+        driver.findElement(elementBy).sendKeys(key);
+    }
+
 
     //Read Text
     protected String readText(By elementBy) {
@@ -77,7 +105,7 @@ public class BasePage {
     }
 
 
-    protected  List<WebElement> getTableRows(By elementBy) {
+    protected List<WebElement> getTableRows(By elementBy) {
         // Get all the table row elements from the table
         WebElement tableElement = driver.findElement(elementBy);
 
@@ -89,7 +117,7 @@ public class BasePage {
         return driver.getTitle();
     }
 
-    public void goToPage(){
+    public void goToPage() {
         driver.get(baseURL);
     }
 }

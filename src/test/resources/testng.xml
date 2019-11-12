@@ -2,14 +2,12 @@
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="TestSuite" >
+<suite name="TestSuite">
 
-    <test name="ChromeTest"  verbose="2">
+    <test name="ChromeTest" verbose="2">
         <!-- <parameter name="browser" value="Chrome"/> -->
         <classes>
-            <class name="HomeTest"/>
-            <class name="LoginTest"/>
-            <class name="MyAccountTest"/>
+            <class name="HotelBookingTest"/>
 
         </classes>
     </test>
